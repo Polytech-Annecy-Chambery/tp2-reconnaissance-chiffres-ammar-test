@@ -12,5 +12,18 @@ def lecture_modeles(chemin_dossier):
 
 
 def reconnaissance_chiffre(image, liste_modeles, S):
-    pass
+    image_binarisee = image.binarisation(S)
+    image_localisee = image_binarisee.localisation()
+
+    max_sim = 0
+    nc_max = 0
+    for nc in range(10):
+        im_resized = image_localisee.resize(liste_modeles[nc].H, liste_modeles[nc].W)
+        simili = im_resized.similitude(liste_modeles[nc])
+        print(' modele ',nc,' sim = ', simili)
+        if(simili > max_sim):
+            max_sim = simili
+            nc_max = nc
+            print (" chiffre lu = ", nc_max) 
+    return(nc_max)
 
